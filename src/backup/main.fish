@@ -2,8 +2,7 @@
 source utils.fish
 
 if not check-commands
-    print-error "Some commands are not in \$PATH"
-    exit 1
+    raise-error "Some commands are not in \$PATH"
 end
 
 print-info "All commands were found"
@@ -32,4 +31,10 @@ print-info "All commands were found"
 # - the drive is reachable
 # - it's the UUID we defined in an env variable
 # If not, do not error, warn that directories for borg will not be saved
-# dbus-send, udisks2
+# Use busctl (better than dbus-send)
+
+set partition_uuid (get-partition-uuid)
+
+if test "$partition_uuid" != "$NJ_BACKUP_PARTITION_UUID"
+    raise-error "Configured partition UUID (\"$NJ_BACKUP_PARTITION_UUID\") for /dev/$BLOCK_DEVICE doesn't match the one found (\"$partition_uuid\")"
+end
