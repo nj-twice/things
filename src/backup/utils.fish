@@ -2,9 +2,15 @@ set -g style_set_bold "\033[1m"
 set -g style_set_normal "\033[0m"
 
 set -g BLOCK_DEVICE sdb1
+set -g FILTER_FILE "$HOME/.config/borg/backup_patterns.filter"
 
 function print-info
     echo -ne "$style_set_bold""[INFO] "$argv"$style_set_normal\n"
+end
+
+function print-hint
+    set_color yellow & echo -ne "$style_set_bold""[HINT] "$argv"$style_set_normal\n"
+    set_color white
 end
 
 function raise-error
