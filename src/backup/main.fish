@@ -39,6 +39,8 @@ if test -z $mount_point
     raise-error "Error while mounting. You may need to unmount manually."
 end
 
+print-info "Drive mounted"
+
 # Do Borg backup
 
 set --export BORG_REPO $mount_point/backup
@@ -62,7 +64,7 @@ set borg_status $status
 
 # First, unconditionally unmount
 
-busctl --json=short call org.freedesktop.UDisks2 /org/freedesktop/UDisks2/block_devices/$NJ_BACKUP_BLOCK_DEVICE org.freedesktop.UDisks2.Filesystem Unmount 'a{sv}' 0
+unmount-drive
 
 # Did the backup succeed?
 
