@@ -1,8 +1,8 @@
 set -g style_set_bold "\033[1m"
 set -g style_set_normal "\033[0m"
 
-set -g BLOCK_DEVICE sdb1
-set -g FILTER_FILE "$HOME/.config/borg/backup_patterns.filter"
+set -g NJ_BACKUP_BLOCK_DEVICE sdb1
+set -g NJ_BACKUP_FILTER_FILE "$HOME/.config/borg/backup_patterns.filter"
 
 function print-info
     echo -ne "$style_set_bold""[INFO] "$argv"$style_set_normal\n"
@@ -28,7 +28,7 @@ function check-commands
 end
 
 function get-partition-uuid
-    set result (busctl --json=short call org.freedesktop.UDisks2 /org/freedesktop/UDisks2/block_devices/$BLOCK_DEVICE org.freedesktop.DBus.Properties Get ss "org.freedesktop.UDisks2.Partition" UUID)
+    set result (busctl --json=short call org.freedesktop.UDisks2 /org/freedesktop/UDisks2/block_devices/$NJ_BACKUP_BLOCK_DEVICE org.freedesktop.DBus.Properties Get ss "org.freedesktop.UDisks2.Partition" UUID)
     or exit $status
     echo $result | jq ".data.[0].data" | string trim -c '"'
 end
