@@ -21,8 +21,6 @@ end
 
 function check-commands
     command -q borg
-    and command -q fd
-    and command -q rg
     and command -q busctl
     and command -q jq
 end
