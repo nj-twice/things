@@ -50,7 +50,7 @@ set archive_name (date +%s)
 print-info "Starting Borg backup"
 
 borg create \
-    --dry-run \
+    # --dry-run \
     --stats \
     --list \
     --filter AMCE \
