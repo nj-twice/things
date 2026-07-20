@@ -12,6 +12,10 @@ set partition_uuid (get-partition-uuid)
 
 # Checks
 
+if test -z "$BORG_PASSPHRASE"
+    raise-error "\$BORG_PASSPHRASE undefined or empty"
+end
+
 if test -z "$NJ_BACKUP_BLOCK_DEVICE"
     raise-error "\$NJ_BACKUP_BLOCK_DEVICE undefined or empty"
 end
@@ -38,7 +42,6 @@ end
 # Do Borg backup
 
 set --export BORG_REPO $mount_point/backup
-set --export BORG_PASSPHRASE "..."
 
 set archive_name (date +%s)
 
