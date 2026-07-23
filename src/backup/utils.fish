@@ -1,23 +1,7 @@
-set -g style_set_bold "\033[1m"
-set -g style_set_normal "\033[0m"
+source ../commons/utils.fish
 
 set -g NJ_BACKUP_BLOCK_DEVICE sdb1
 set -g NJ_BACKUP_FILTER_FILE "$HOME/.config/borg/backup_patterns.filter"
-
-function print-info
-    echo -ne "$style_set_bold""[INFO] "$argv"$style_set_normal\n"
-end
-
-function print-hint
-    set_color yellow & echo -ne "$style_set_bold""[HINT] "$argv"$style_set_normal\n"
-    set_color white
-end
-
-function raise-error
-    set_color red & echo -e "$style_set_bold""[ERROR] $argv"
-    set_color white
-    exit 1
-end
 
 function check-commands
     command -q borg
