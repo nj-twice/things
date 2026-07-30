@@ -1,22 +1,20 @@
-set -g style_set_bold "\033[1m"
-set -g style_set_normal "\033[0m"
-
 function print-info
-    echo -ne "$style_set_bold""[INFO] "$argv"$style_set_normal\n"
+    echo -ne (set_color -o)"[INFO]"(set_color --reset)" $argv\n"
+    set_color --reset
 end
 
 function print-warning
-    set_color yellow & echo -ne $style_set_bold"[WARN] $argv\n"
-    set_color --reset white
+    echo -ne (set_color -o yellow)"[WARN]"(set_color --reset yellow)" $argv\n"
+    set_color --reset
 end
 
 function print-hint
-    set_color brgreen & echo -ne $style_set_bold"[HINT] $argv\n"
-    set_color --reset white
+    echo -ne (set_color -o brgreen)"[HINT]"(set_color --reset brgreen)" $argv\n"
+    set_color --reset
 end
 
 function raise-error
-    set_color red & echo -e "$style_set_bold""[ERROR] $argv"
-    set_color --reset white
+    echo -ne (set_color -o red)"[ERROR]"(set_color --reset red)" $argv\n"
+    set_color --reset
     exit 1
 end
