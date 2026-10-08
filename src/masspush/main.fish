@@ -1,4 +1,4 @@
-source (path resolve (status dirname))/../commons/utils.fish
+source (path resolve (status dirname))/../lib/utils.fish
 
 set root_dir $HOME/repos
 
