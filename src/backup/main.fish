@@ -1,5 +1,5 @@
 # Imports
-source utils.fish
+source (path resolve (status dirname))/utils.fish
 # ---------
 
 if not check-commands

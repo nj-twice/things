@@ -1,4 +1,4 @@
-source ../commons/utils.fish
+source (path resolve (status dirname))/../commons/utils.fish
 
 set -g NJ_BACKUP_BLOCK_DEVICE sdb1
 set -g NJ_BACKUP_FILTER_FILE "$HOME/.config/borg/backup_patterns.filter"
