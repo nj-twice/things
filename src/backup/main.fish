@@ -3,17 +3,17 @@ source (path resolve (status dirname))/utils.fish
 # ---------
 
 assert-commands borg busctl jq
-assert-envvars BORG_PASSPHRASE NJ_BACKUP_BLOCK_DEVICE NJ_BACKUP_PARTITION_UUID NJ_BACKUP_FILTER_FILE
-assert-files $NJ_BACKUP_FILTER_FILE
+assert-envvars BORG_PASSPHRASE THINGS_BACKUP_BLOCK_DEVICE THINGS_BACKUP_PARTITION_UUID THINGS_BACKUP_FILTER
+assert-files $THINGS_BACKUP_FILTER
 
 set partition_uuid (get-partition-uuid)
-if test "$partition_uuid" != "$NJ_BACKUP_PARTITION_UUID"
-    raise-error "Configured partition UUID (\"$NJ_BACKUP_PARTITION_UUID\") for /dev/$NJ_BACKUP_BLOCK_DEVICE doesn't match the one found (\"$partition_uuid\")"
+if test "$partition_uuid" != "$THINGS_BACKUP_PARTITION_UUID"
+    raise-error "Configured partition UUID (\"$THINGS_BACKUP_PARTITION_UUID\") for /dev/$THINGS_BACKUP_BLOCK_DEVICE doesn't match the one found (\"$partition_uuid\")"
 end
 
 # Mount the drive and get the mount point
 
-set mount_point (busctl --json=short call org.freedesktop.UDisks2 /org/freedesktop/UDisks2/block_devices/$NJ_BACKUP_BLOCK_DEVICE org.freedesktop.UDisks2.Filesystem Mount 'a{sv}' 0 | jq '.data.[0]' | string trim -c '"')
+set mount_point (busctl --json=short call org.freedesktop.UDisks2 /org/freedesktop/UDisks2/block_devices/$THINGS_BACKUP_BLOCK_DEVICE org.freedesktop.UDisks2.Filesystem Mount 'a{sv}' 0 | jq '.data.[0]' | string trim -c '"')
 
 if test -z $mount_point
     raise-error "Error while mounting. You may need to unmount manually."
@@ -36,7 +36,7 @@ borg create \
     --filter AMCE \
     --progress \
     --exclude-caches \
-    ::$archive_name --patterns-from "$NJ_BACKUP_FILTER_FILE"
+    ::$archive_name --patterns-from "$THINGS_BACKUP_FILTER"
 
 # Save the status for later
 
