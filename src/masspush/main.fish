@@ -1,7 +1,8 @@
 source (path resolve (status dirname))/../lib/utils.fish
 
-set root_dir $HOME/repos
+assert-envvars NJ_MASSPUSH_REPOS_PATH
 
+set root_dir $NJ_MASSPUSH_REPOS_PATH
 cd $root_dir
 
 for dir in */
