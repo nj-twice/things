@@ -10,7 +10,7 @@ end
 function assert-envvars
     for varname in $argv
         if test -z $$varname
-            raise-error "Some environment variables (e.g. \$$varname) are underfined or empty."
+            raise-error "Some environment variables (e.g. \$$varname) are undefined or empty."
         end
     end
     print-info "All environment variables are defined."
