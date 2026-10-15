@@ -5,10 +5,6 @@ pkgs:
 let
   pythonWithPackages = pkgs.python3.withPackages (
     pyPkgs: with pyPkgs; [
-      pythonRelaxDepsHook
-      setuptools
-      setuptools-scm
-
       manim
       furo
       myst-parser
