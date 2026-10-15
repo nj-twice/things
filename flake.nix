@@ -29,16 +29,22 @@
       }
     ) inputs.nixpkgs.legacyPackages;
 
-    devShells = builtins.mapAttrs (system: pkgs: {
-      default = pkgs.mkShell {
-        inputsFrom = [
-          inputs.self.packages.${system}.default
-        ];
-        # packages = with pkgs; [
-        #   borgbackup
-        # ];
-      };
-    }) inputs.nixpkgs.legacyPackages;
-
+    devShells = builtins.mapAttrs (
+      system: pkgs:
+      let
+        manim_docs = (import ./nix/manim_docs.nix) pkgs;
+      in
+      {
+        default = pkgs.mkShell {
+          inputsFrom = [
+            inputs.self.packages.${system}.default
+          ];
+          # packages = with pkgs; [
+          #   borgbackup
+          # ];
+        };
+        inherit manim_docs;
+      }
+    ) inputs.nixpkgs.legacyPackages;
   };
 }
